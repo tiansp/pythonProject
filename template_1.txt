@@ -1,0 +1,23 @@
+!
+{%- if hostname %}
+hostname {{hostname}}
+{% endif -%}
+!
+{%- if vlan_id %}
+vlan {{vlan_id}}
+exit
+{% endif -%}
+!
+interface {{interface}}
+ no shutdown
+{%- if link_type == 'trunk' %}
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+{% elif link_type == 'access' %}
+ switchport mode access
+ switchport access vlan {{vlan_id}}
+{% endif -%}
+!
+
+
+
